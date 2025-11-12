@@ -46,7 +46,10 @@ class TodoScreen extends StatelessWidget {
   Widget _buildBody(TodoState state) {
     if (state is TodoInitial) {
       return Center(child: Text('No todos yet!'));
-    } else if (state is TodoLoaded) {
+    } else if(state is TodoLoading){
+      return Center(child: CircularProgressIndicator(),);
+    }
+    else if (state is TodoLoaded) {
       if (state.todos.isEmpty) return Center(child: Text('No todos yet!'));
       return ListView.builder(
         itemCount: state.todos.length,

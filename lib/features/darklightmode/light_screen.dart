@@ -4,11 +4,19 @@ import 'package:learningbloc/features/darklightmode/bloc/light_blocf.dart';
 import 'package:learningbloc/features/darklightmode/bloc/light_event.dart';
 import 'package:learningbloc/features/darklightmode/bloc/light_state.dart';
 
-class LightScreen extends StatelessWidget {
+class LightScreen extends StatefulWidget {
   LightScreen({super.key});
+
+  @override
+  State<LightScreen> createState() => _LightScreenState();
+}
+
+class _LightScreenState extends State<LightScreen> {
   final lightBloc = LightBloc();
+
   @override
   Widget build(BuildContext context) {
+    print('rebuild');
     return BlocListener<LightBloc,LightState>(
       listener: (context, state) {
 

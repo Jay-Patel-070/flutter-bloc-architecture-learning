@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:learningbloc/features/darklightmode/light_screen.dart';
 import 'package:learningbloc/features/login/bloc/login_bloc.dart';
 import 'package:learningbloc/features/login/bloc/login_event.dart';
 import 'package:learningbloc/features/login/bloc/login_state.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -12,18 +14,48 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('rebuild');
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
-            ScaffoldMessenger.of(
+            Get.snackbar(
+              '',
+              '',
+              titleText: Center(
+                child: Text(
+                  'Login successfull',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+              messageText: SizedBox.shrink(),
+              padding: EdgeInsets.symmetric(vertical: 8),
+            );
+            Navigator.pushAndRemoveUntil(
               context,
-            ).showSnackBar(const SnackBar(content: Text("Login Successful")));
+              MaterialPageRoute(builder: (context) => LightScreen()),
+              (route) => false,
+            );
           } else if (state is LoginFailure) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            Get.snackbar(
+              '',
+              '',
+              titleText: Center(
+                child: Text(
+                  state.message.toString(),
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+              messageText: SizedBox.shrink(),
+              padding: EdgeInsets.symmetric(vertical: 8),
+            );
           }
         },
         bloc: loginBloc,
@@ -35,7 +67,7 @@ class LoginScreen extends StatelessWidget {
             }
 
             return Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

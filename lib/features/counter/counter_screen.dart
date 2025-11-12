@@ -8,12 +8,14 @@ class CounterScreen extends StatelessWidget {
   final counterBloc = CounterBloc();
   @override
   Widget build(BuildContext context) {
-
-    return BlocListener<CounterBloc,CounterState>(
+    print('rebuild');
+    return BlocListener<CounterBloc, CounterState>(
       bloc: counterBloc,
       listener: (context, state) {
-        if(state.value == 3){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('you reached 3')));
+        if (state.value == 3) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('you reached 3')));
         }
         print(state.value);
       },
