@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learningbloc/features/users/bloc/user_bloc.dart';
 import 'package:learningbloc/features/users/bloc/user_event.dart';
 import 'package:learningbloc/features/users/bloc/user_state.dart';
-import 'package:learningbloc/features/users/data/user_datarepository.dart';
-import 'package:learningbloc/features/users/data/user_datasource.dart';
+import 'package:learningbloc/features/users/data/user_repository.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -14,23 +13,14 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  late final UserBloc userBloc;
+  final userBloc = UserBloc();
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    userBloc = UserBloc(
-      UserDatarepository(userdatasource: UserDatasource()),
-    );
     userBloc.add(FetchUsers());
   }
-
-  @override
-  void dispose() {
-    userBloc.close(); // VERY IMPORTANT to avoid memory leaks
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

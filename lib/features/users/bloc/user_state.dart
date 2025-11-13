@@ -1,3 +1,4 @@
+import 'package:learningbloc/features/users/data/user_repository.dart';
 import 'package:learningbloc/features/users/model/user_model.dart';
 
 abstract class UserState {}
