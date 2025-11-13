@@ -4,18 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:learningbloc/features/darklightmode/light_screen.dart';
 import 'package:learningbloc/features/login/bloc/login_event.dart';
 import 'package:learningbloc/features/login/bloc/login_state.dart';
+import 'package:learningbloc/features/login/data/login_repository.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  LoginRepository loginrepository = LoginRepository();
   LoginBloc() : super(LoginInitial()) {
     on<onLoginButtonPressed>((event, emit) async {
       emit(LoginLoading());
-      await Future.delayed(Duration(seconds: 2)); // simulate API call
-
-      // dummy validation
-      if (event.email == "test@gmail.com" && event.password == "1234") {
-        emit(LoginSuccess());
-      } else {
-        emit(LoginFailure("Invalid email or password"));
+      try{
+        final response = await loginrepository.login(
+        event.loginrequestmodel?.username ?? '',
+            event.loginrequestmodel?.password ?? ''
+        );
+        emit(LoginSuccess(loginresponsemodel: response));
+      }catch(e){
+        emit(LoginFailure(e.toString()));
       }
     });
   }

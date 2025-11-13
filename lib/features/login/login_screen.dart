@@ -5,9 +5,10 @@ import 'package:learningbloc/features/login/bloc/login_bloc.dart';
 import 'package:learningbloc/features/login/bloc/login_event.dart';
 import 'package:learningbloc/features/login/bloc/login_state.dart';
 import 'package:get/get.dart';
+import 'package:learningbloc/features/login/model/login_request_model.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final loginBloc = LoginBloc();
   LoginScreen({super.key});
@@ -72,8 +73,8 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextField(
-                    controller: emailController,
-                    decoration: const InputDecoration(labelText: 'Email'),
+                    controller: usernameController,
+                    decoration: const InputDecoration(labelText: 'Username'),
                   ),
                   TextField(
                     controller: passwordController,
@@ -83,11 +84,14 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      final email = emailController.text.trim();
+                      final username = usernameController.text.trim();
                       final password = passwordController.text.trim();
 
                       loginBloc.add(
-                        onLoginButtonPressed(email: email, password: password),
+                        onLoginButtonPressed(loginrequestmodel: LoginRequestModel(
+                          username: username,
+                          password: password
+                        )),
                       );
                     },
                     child: const Text('Login'),

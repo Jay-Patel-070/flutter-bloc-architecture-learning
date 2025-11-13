@@ -1,7 +1,8 @@
+import 'package:learningbloc/features/login/model/login_request_model.dart';
+
 sealed class LoginEvent {}
 
 class onLoginButtonPressed extends LoginEvent {
-  String email;
-  String password;
-  onLoginButtonPressed({required this.email, required this.password});
+  LoginRequestModel? loginrequestmodel;
+  onLoginButtonPressed({this.loginrequestmodel});
 }
